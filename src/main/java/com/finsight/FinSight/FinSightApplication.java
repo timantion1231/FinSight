@@ -9,5 +9,11 @@ public class FinSightApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FinSightApplication.class, args);
 	}
-
 }
+/*
+TODO:
+Продумать data transfer object
+Продумать repository
+Прописать поля всех Entity
+Сделать каркас
+ */
