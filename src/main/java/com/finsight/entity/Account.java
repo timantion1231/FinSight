@@ -10,7 +10,14 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "accountNumber", unique = true)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
+
+
+    @NotNull
+    @Column(name = "accountNumber", unique = true, nullable = false, length = 50)
     private String accountNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

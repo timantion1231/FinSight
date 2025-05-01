@@ -14,9 +14,9 @@ public class Categories {
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     @JoinColumn(name = "entity_type_id", nullable = false)
-    private EntityType entityType; // на схеме не указано что связано с табл. entity types УТОЧНИТЬ
+    private EntityType entityType;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false, length = 50)
     @NotNull
     private String name;
 

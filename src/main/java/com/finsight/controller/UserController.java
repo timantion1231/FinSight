@@ -17,10 +17,3 @@ public class UserController {
 Удаление счетов получателя CounterpartyAccountService
 Выгрузка отчёта UserService
  */
-
-/*
-Уточнить: Categories (entity)
-Counterparty(ent)
-уточнить про все типы связей один ко многим и тд у каждого поля
-нужно ли сделать counterparty accounts для контрагентов (это нужно для связи ManyToMany)
- */

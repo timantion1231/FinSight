@@ -12,6 +12,6 @@ public class EntityType {
     private int id;
 
     @NotNull
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false, length = 50)
     private String name;
 }
