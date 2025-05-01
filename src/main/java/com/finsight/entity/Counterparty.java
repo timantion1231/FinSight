@@ -15,12 +15,17 @@ public class Counterparty {
     private int id;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "phone_number", nullable = false, length = 20)
-    private String phoneNumber; // FK с чем? с какой таблицей и каким полем
+    @Column(name = "phone_number", nullable = false, length = 20, unique = true)
+    private String phoneNumber;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,15 +36,14 @@ public class Counterparty {
     @Column(name = "tin", nullable = false, unique = true, length = 12)
     private String tin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber", nullable = false, unique = true)
-    private Account account;
+    @Column(name = "accountNumber", nullable = false, unique = true, length = 50)
+    private String accountNumber;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_id", nullable = false, unique = true)
-    private Bank bank; //какой тип связи и вообще зачем это поле? id банка можно узнать через account
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_id", nullable = false)
+    private Bank bank;
 
     @NotNull
     @CreatedDate

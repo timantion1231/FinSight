@@ -12,8 +12,6 @@ public class FinSightApplication {
 }
 /*
 TODO:
-Продумать data transfer object
-Продумать repository
 Прописать поля всех Entity
 Сделать каркас
  */
