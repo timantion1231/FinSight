@@ -64,10 +64,18 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- Lombok -->
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.38</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Other -->
+		<dependency>
+			<groupId>io.github.benas</groupId>
+			<artifactId>random-beans</artifactId>
+			<version>3.9.0</version>
 		</dependency>
 	</dependencies>	
 

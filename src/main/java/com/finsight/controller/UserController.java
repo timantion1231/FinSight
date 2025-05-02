@@ -13,57 +13,62 @@ import java.util.ArrayList;
 public class UserController {
     //позже заменить ответ на responseEntity
 
-    @GetMapping("/profile/{id}")
-    public UserDTO getProfile(@PathVariable int id){//DTO изменить так же путь при авторизации (убрать {id})
-        return new UserDTO();
+    @GetMapping("/profile/")
+    public UserDTO getProfile(@RequestParam int id) {//DTO изменить так же путь при авторизации (убрать )
+        return new UserDTO().randomFill().getBaseUser();
     }
 
-    @PutMapping("/profile/{id}")
-    public UserDTO updateUser(@PathVariable int id, @RequestBody UserDTO user){
-        return new UserDTO();
+    @PutMapping("/profile/")
+    public UserDTO updateUser(@RequestParam int id, @RequestBody UserDTO user) {
+        return user;
     }
 
     @GetMapping("/transactions")
-    public ArrayList<TransactionDTO> getAllTransactions(){
-        return new ArrayList<>();
+    public ArrayList<TransactionDTO> getAllTransactions() {
+        ArrayList<TransactionDTO> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            list.add(new TransactionDTO().randomFill().getBaseTransaction());
+        return list;
     }
 
     @PostMapping("/transactions")
-    public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction){
+    public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction) {
+        return transaction;
+    }
+
+    @PutMapping("/transactions/")
+    public TransactionDTO updateTransaction(@RequestParam int id, @RequestBody TransactionDTO transaction) {
         return new TransactionDTO();
     }
 
-    @PutMapping("/transactions/{id}")
-    public TransactionDTO updateTransaction(@PathVariable int id, @RequestBody TransactionDTO transaction){
-        return new TransactionDTO();
-    }
-
-    @DeleteMapping("/transactions/{id}")
-    public void deleteTransaction(@PathVariable int id){
+    @DeleteMapping("/transactions/")
+    public void deleteTransaction(@RequestParam int id) {
 
     }
 
     @GetMapping("/accounts")
-    public ArrayList<AccountDTO> getAllAccounts(){
+    public ArrayList<AccountDTO> getAllAccounts() {
+        ArrayList<AccountDTO> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            list.add(new AccountDTO().randomFill().getBaseAccount());
         return new ArrayList<>();
     }
 
     @PostMapping("/accounts")
-    public AccountDTO createAccount(@RequestBody AccountDTO account){
-        return new AccountDTO();
+    public AccountDTO createAccount(@RequestBody AccountDTO account) {
+        return account;
     }
 
-    @DeleteMapping("/accounts/{id}")
-    public void deleteAccount(@PathVariable int id){
+    @DeleteMapping("/accounts/")
+    public void deleteAccount(@RequestParam int id) {
 
     }
 
-   // подумать насчет счетов получателя
+    // подумать насчет счетов получателя
     @GetMapping("/reports")
-    public ReportDTO getReport(){
+    public ReportDTO getReport() {
         return new ReportDTO();
     }
-
 
 }
 /*
