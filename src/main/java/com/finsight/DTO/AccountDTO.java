@@ -22,13 +22,13 @@ public class AccountDTO {
     private String accountNumber;
     private int bankId;
 
-    public AccountDTO randomFill(){
+    public AccountDTO randomFill() {
         EnhancedRandom rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
         return rnd.nextObject(AccountDTO.class);
     }
 
     @JsonIgnore
-    public AccountDTO getBaseAccount(){
+    public AccountDTO getBaseAccount() {
         return builder()
                 .accountNumber(this.accountNumber)
                 .bankId(this.bankId)
@@ -36,7 +36,7 @@ public class AccountDTO {
     }
 
     @JsonIgnore
-    public AccountDTO getFullAccount(){
+    public AccountDTO getFullAccount() {
         return this;
     }
 }

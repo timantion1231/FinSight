@@ -4,6 +4,10 @@ import com.finsight.DTO.AccountDTO;
 import com.finsight.DTO.ReportDTO;
 import com.finsight.DTO.TransactionDTO;
 import com.finsight.DTO.UserDTO;
+import com.finsight.service.TransactionService;
+import com.finsight.service.UserAccountService;
+import com.finsight.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,62 +16,67 @@ import java.util.ArrayList;
 @RequestMapping("/user")
 public class UserController {
     //позже заменить ответ на responseEntity
+    private final UserService userService;
+    private final TransactionService transactionService;
+    private final UserAccountService userAccountService;
+
+    @Autowired
+    public UserController(UserService userService, TransactionService transactionService,
+                          UserAccountService userAccountService) {
+        this.userService = userService;
+        this.transactionService = transactionService;
+        this.userAccountService = userAccountService;
+    }
 
     @GetMapping("/profile/")
     public UserDTO getProfile(@RequestParam int id) {//DTO изменить так же путь при авторизации (убрать )
-        return new UserDTO().randomFill().getBaseUser();
+        return userService.getBaseUserProfile(id);
     }
 
     @PutMapping("/profile/")
-    public UserDTO updateUser(@RequestParam int id, @RequestBody UserDTO user) {
-        return user;
+    public UserDTO updateUser(@RequestBody UserDTO user) {
+        return userService.editUserProfile(user);
     }
 
     @GetMapping("/transactions")
     public ArrayList<TransactionDTO> getAllTransactions() {
-        ArrayList<TransactionDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++)
-            list.add(new TransactionDTO().randomFill().getBaseTransaction());
-        return list;
+        return transactionService.getAllTransactions();
     }
 
     @PostMapping("/transactions")
     public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction) {
-        return transaction;
+        return transactionService.createTransaction(transaction);
     }
 
     @PutMapping("/transactions/")
-    public TransactionDTO updateTransaction(@RequestParam int id, @RequestBody TransactionDTO transaction) {
-        return new TransactionDTO();
+    public TransactionDTO updateTransaction(@RequestBody TransactionDTO transaction) {
+        return transactionService.editTransaction(transaction);
     }
 
     @DeleteMapping("/transactions/")
-    public void deleteTransaction(@RequestParam int id) {
-
+    public String deleteTransaction(@RequestParam int id) {
+        return transactionService.deleteTransaction(id);
     }
 
     @GetMapping("/accounts")
     public ArrayList<AccountDTO> getAllAccounts() {
-        ArrayList<AccountDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++)
-            list.add(new AccountDTO().randomFill().getBaseAccount());
-        return new ArrayList<>();
+        return userAccountService.getAllAccounts();
     }
 
     @PostMapping("/accounts")
     public AccountDTO createAccount(@RequestBody AccountDTO account) {
-        return account;
+        return userAccountService.createAccount(account);
     }
 
     @DeleteMapping("/accounts/")
-    public void deleteAccount(@RequestParam int id) {
-
+    public String deleteAccount(@RequestParam int id) {
+        return userAccountService.deleteAccount(id);
     }
 
     // подумать насчет счетов получателя
     @GetMapping("/reports")
-    public ReportDTO getReport() {
-        return new ReportDTO();
+    public ReportDTO getReport(@RequestParam int userId) {
+        return userService.getReport(userId);
     }
 
 }

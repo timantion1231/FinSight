@@ -1,3 +1,4 @@
 package com.finsight.utils;
 
-public class JwtUtils {}
+public class JwtUtils {
+}

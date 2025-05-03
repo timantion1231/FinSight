@@ -26,7 +26,7 @@ public class UserDTO {
     private String tin;
 
     @JsonIgnore
-    public UserDTO getBaseUser(){
+    public UserDTO getBaseUser() {
         return UserDTO.builder()
                 .email(this.email)
                 .name(this.name)
@@ -34,12 +34,13 @@ public class UserDTO {
                 .tin(this.tin)
                 .build();
     }
+
     @JsonIgnore
-    public UserDTO getFullUser(){
+    public UserDTO getFullUser() {
         return this;
     }
 
-    public UserDTO randomFill(){
+    public UserDTO randomFill() {
         EnhancedRandom rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
         return rnd.nextObject(UserDTO.class);
     }

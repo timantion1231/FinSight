@@ -30,12 +30,12 @@ public class TransactionDTO {
     private int categoryId;
 
     @JsonIgnore
-    public TransactionDTO getFullTransaction(){
+    public TransactionDTO getFullTransaction() {
         return this;
     }
 
     @JsonIgnore
-    public TransactionDTO getBaseTransaction(){
+    public TransactionDTO getBaseTransaction() {
         return builder()
                 .dateTime(this.dateTime)
                 .transactionTypeId(this.transactionTypeId)
@@ -49,7 +49,7 @@ public class TransactionDTO {
                 .build();
     }
 
-    public TransactionDTO randomFill(){
+    public TransactionDTO randomFill() {
         EnhancedRandom rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
         return rnd.nextObject(TransactionDTO.class);
     }

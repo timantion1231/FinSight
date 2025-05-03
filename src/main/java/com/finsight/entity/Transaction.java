@@ -30,7 +30,6 @@ public class Transaction {
     private TransactionStatus transactionStatus;
 
 
-
     @NotNull
     @Column(name = "amount", nullable = false)
     private int amount; // decimal(15,5)

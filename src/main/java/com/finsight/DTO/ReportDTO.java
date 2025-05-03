@@ -6,7 +6,7 @@ import lombok.Data;
 public class ReportDTO {
     private String status;
 
-    public ReportDTO (){
+    public ReportDTO() {
         this.status = "Все чикибамбони";
     }
 }
