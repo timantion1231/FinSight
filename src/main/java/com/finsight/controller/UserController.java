@@ -27,7 +27,7 @@ public class UserController {
         this.transactionService = transactionService;
         this.userAccountService = userAccountService;
     }
-
+// все requestParam заменить на pathVariable
     @GetMapping("/profile/")
     public UserDTO getProfile(@RequestParam int id) {//DTO изменить так же путь при авторизации (убрать )
         return userService.getBaseUserProfile(id);
