@@ -28,8 +28,8 @@ public class UserController {
         this.userAccountService = userAccountService;
     }
 // все requestParam заменить на pathVariable
-    @GetMapping("/profile/")
-    public UserDTO getProfile(@RequestParam int id) {//DTO изменить так же путь при авторизации (убрать )
+    @GetMapping("/profile/{id}")
+    public UserDTO getProfile(@PathVariable int id) {//DTO изменить так же путь при авторизации (убрать )
         return userService.getBaseUserProfile(id);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("/transactions/")
-    public String deleteTransaction(@RequestParam int id) {
+    public String deleteTransaction(@PathVariable int id) {
         return transactionService.deleteTransaction(id);
     }
 
@@ -69,13 +69,13 @@ public class UserController {
     }
 
     @DeleteMapping("/accounts/")
-    public String deleteAccount(@RequestParam int id) {
+    public String deleteAccount(@PathVariable int id) {
         return userAccountService.deleteAccount(id);
     }
 
     // подумать насчет счетов получателя
     @GetMapping("/reports")
-    public ReportDTO getReport(@RequestParam int userId) {
+    public ReportDTO getReport(@PathVariable int userId) {
         return userService.getReport(userId);
     }
 
