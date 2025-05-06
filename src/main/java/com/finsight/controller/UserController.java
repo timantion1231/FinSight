@@ -4,6 +4,9 @@ import com.finsight.DTO.AccountDTO;
 import com.finsight.DTO.ReportDTO;
 import com.finsight.DTO.TransactionDTO;
 import com.finsight.DTO.UserDTO;
+import com.finsight.DTO.request.CounterPartyDTO;
+import com.finsight.DTO.response.FullCounterpartyDTO;
+import com.finsight.service.CounterpartyService;
 import com.finsight.service.TransactionService;
 import com.finsight.service.UserAccountService;
 import com.finsight.service.UserService;
@@ -19,13 +22,16 @@ public class UserController {
     private final UserService userService;
     private final TransactionService transactionService;
     private final UserAccountService userAccountService;
+    private final CounterpartyService counterpartyService;
 
     @Autowired
     public UserController(UserService userService, TransactionService transactionService,
-                          UserAccountService userAccountService) {
+                          UserAccountService userAccountService,
+                          CounterpartyService counterpartyService) {
         this.userService = userService;
         this.transactionService = transactionService;
         this.userAccountService = userAccountService;
+        this.counterpartyService = counterpartyService;
     }
 
     @GetMapping("/profile/{id}")
@@ -73,6 +79,26 @@ public class UserController {
         return userAccountService.deleteAccount(id);
     }
 
+    @GetMapping("/counterparties")
+    public ArrayList<FullCounterpartyDTO> getAllCounterParties(){
+        return counterpartyService.getAllCounterparties();
+    }
+
+    @PostMapping("/counterparties")
+    public FullCounterpartyDTO createCounterparty(@RequestBody CounterPartyDTO counterParty){
+        return counterpartyService.createCounterparty(counterParty);
+    }
+
+    @PutMapping("/counterparties")
+    public FullCounterpartyDTO updateCounterparty(@RequestBody FullCounterpartyDTO counterparty){
+        return counterpartyService.updateCounterparty(counterparty);
+    }
+
+    @DeleteMapping("/counterparties/{id}")
+    public String deleteCounterParty(@PathVariable int id){
+        return counterpartyService.deleteCounterparty(id);
+    }
+
     // подумать насчет счетов получателя
     @GetMapping("/reports/{id}")
     public ReportDTO getReport(@PathVariable int userId) {
@@ -80,18 +106,3 @@ public class UserController {
     }
 
 }
-/*
-просмотр данных пользователя UserService
-Редактирование пользователя UserService
-Просмотр транзакций  TransactionService
-Создание транзакций TransactionService
-Редактирование транзакции TransactionService
-Удаление транзакции TransactionService
-Просмотр счетов пользователя UserAccountService
-Создание счетов пользователя UserAccountService
-Удаление счетов пользователя UserAccountService
-Просмотр счетов получателя CounterpartyAccountService
-Создание счетов получателя CounterpartyAccountService
-Удаление счетов получателя CounterpartyAccountService
-Выгрузка отчёта UserService
- */

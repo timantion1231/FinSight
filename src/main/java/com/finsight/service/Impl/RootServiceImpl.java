@@ -4,6 +4,7 @@ import com.finsight.DTO.general.*;
 import com.finsight.service.RootService;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +13,11 @@ import java.util.ArrayList;
 public class RootServiceImpl implements RootService {
 
     private EnhancedRandom rnd;
+
+    @Autowired
+    public RootServiceImpl(){
+
+    }
 
     @Override
     public ArrayList<EntityTypesDTO> getAllEntityTypes() {
