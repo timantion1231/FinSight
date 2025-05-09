@@ -1,6 +1,5 @@
 package com.finsight;
 
-import com.finsight.DTO.UserDTO;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 

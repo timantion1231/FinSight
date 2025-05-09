@@ -2,9 +2,15 @@ package com.finsight.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categories")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Categories {
 
     @Id

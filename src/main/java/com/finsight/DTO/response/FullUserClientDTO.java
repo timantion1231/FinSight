@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,5 +16,5 @@ public class FullUserClientDTO {
     private String email;
     private int entityTypeId;
     private String tin;
-    private FullUserAccountDTO account;
+    private ArrayList<FullUserAccountDTO> accounts;
 }

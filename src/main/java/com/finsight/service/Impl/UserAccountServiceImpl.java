@@ -1,6 +1,8 @@
 package com.finsight.service.Impl;
 
-import com.finsight.DTO.AccountDTO;
+import com.finsight.DTO.request.UserAccountDTO;
+import com.finsight.DTO.response.FullUserAccountDTO;
+import com.finsight.Randomizer;
 import com.finsight.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,27 +18,27 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public ArrayList<AccountDTO> getAllAccounts() {
-        ArrayList<AccountDTO> accounts = new ArrayList<>();
+    public ArrayList<FullUserAccountDTO> getAllAccounts() {
+        ArrayList<FullUserAccountDTO> accounts = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            accounts.add(new AccountDTO().randomFill().getBaseAccount());
+            accounts.add(Randomizer.randomize(FullUserAccountDTO.class));
         }
         return accounts;
     }
 
     @Override
-    public AccountDTO getAccount(int id) {
-        return new AccountDTO().randomFill().getBaseAccount();
+    public FullUserAccountDTO getAccount(int id) {
+        return Randomizer.randomize(FullUserAccountDTO.class);
     }
 
     @Override
-    public AccountDTO createAccount(AccountDTO account) {
-        return new AccountDTO().randomFill().getBaseAccount();
+    public FullUserAccountDTO createAccount(UserAccountDTO account) {
+        return Randomizer.randomize(FullUserAccountDTO.class);
     }
 
     @Override
-    public AccountDTO editAccount(AccountDTO account) {
-        return new AccountDTO().randomFill().getBaseAccount();
+    public FullUserAccountDTO editAccount(UserAccountDTO account) {
+        return Randomizer.randomize(FullUserAccountDTO.class);
     }
 
     @Override

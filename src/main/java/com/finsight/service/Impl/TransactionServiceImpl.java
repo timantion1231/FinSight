@@ -1,7 +1,9 @@
 package com.finsight.service.Impl;
 
-import com.finsight.DTO.AccountDTO;
-import com.finsight.DTO.TransactionDTO;
+import com.finsight.DTO.request.EditTransactionDTO;
+import com.finsight.DTO.request.NewTransactionDTO;
+import com.finsight.DTO.response.FullTransactionDTO;
+import com.finsight.Randomizer;
 import com.finsight.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,27 +19,27 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public ArrayList<TransactionDTO> getAllTransactions() {
-        ArrayList<TransactionDTO> transactions = new ArrayList<>();
+    public ArrayList<FullTransactionDTO> getAllTransactions() {
+        ArrayList<FullTransactionDTO> transactions = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            transactions.add(new TransactionDTO().randomFill().getBaseTransaction());
+            transactions.add(Randomizer.randomize(FullTransactionDTO.class));
         }
         return transactions;
     }
 
     @Override
-    public TransactionDTO getTransaction(int id) {
-        return new TransactionDTO().randomFill().getBaseTransaction();
+    public FullTransactionDTO getTransaction(int id) {
+        return Randomizer.randomize(FullTransactionDTO.class);
     }
 
     @Override
-    public TransactionDTO editTransaction(TransactionDTO transaction) {
-        return transaction;
+    public FullTransactionDTO editTransaction(EditTransactionDTO transaction) {
+        return Randomizer.randomize(FullTransactionDTO.class);
     }
 
     @Override
-    public TransactionDTO createTransaction(TransactionDTO transaction) {
-        return transaction;
+    public FullTransactionDTO createTransaction(NewTransactionDTO transaction) {
+        return Randomizer.randomize(FullTransactionDTO.class);
     }
 
     @Override

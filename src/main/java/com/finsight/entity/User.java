@@ -1,14 +1,21 @@
 package com.finsight.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -27,12 +34,13 @@ public class User {
 
     @NotNull
     @Column(name = "password", nullable = false)
-    private int password;
+    private String password;
 
     @NotNull
     @Column(name = "phone_number", nullable = false, length = 20)
     @Pattern(regexp = "^\\+?[0-9\\s\\-()]{7,20}$",
             message = "Invalid phone number format")
+    @JsonProperty("phoneNumber")
     private String phone;
 
 

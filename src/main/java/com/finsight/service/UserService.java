@@ -1,15 +1,15 @@
 package com.finsight.service;
 
-import com.finsight.DTO.ReportDTO;
-import com.finsight.DTO.UserDTO;
+import com.finsight.DTO.request.UserUpdateDTO;
+import com.finsight.DTO.response.FullUserClientDTO;
+import com.finsight.DTO.response.ReportDTO;
 
 public interface UserService {
-    public UserDTO getBaseUserProfile(int id);
+    public FullUserClientDTO getBaseUserProfile(int id);
 
-    public UserDTO editUserProfile(UserDTO user);
+    public FullUserClientDTO editUserProfile(UserUpdateDTO user);
 
     public ReportDTO getReport(int userId);
 
-    public String changePassword(String oldPass, String newPass, int userId);
 
 }

@@ -1,11 +1,7 @@
 package com.finsight.controller;
 
-import com.finsight.DTO.AccountDTO;
-import com.finsight.DTO.ReportDTO;
-import com.finsight.DTO.TransactionDTO;
-import com.finsight.DTO.UserDTO;
-import com.finsight.DTO.request.CounterPartyDTO;
-import com.finsight.DTO.response.FullCounterpartyDTO;
+import com.finsight.DTO.request.*;
+import com.finsight.DTO.response.*;
 import com.finsight.service.CounterpartyService;
 import com.finsight.service.TransactionService;
 import com.finsight.service.UserAccountService;
@@ -35,27 +31,27 @@ public class UserController {
     }
 
     @GetMapping("/profile/{id}")
-    public UserDTO getProfile(@PathVariable int id) {//DTO изменить так же путь при авторизации (убрать )
+    public FullUserClientDTO getProfile(@PathVariable int id) {//DTO изменить так же путь при авторизации (убрать )
         return userService.getBaseUserProfile(id);
     }
 
     @PutMapping("/profile/")
-    public UserDTO updateUser(@RequestBody UserDTO user) {
+    public FullUserClientDTO updateUser(@RequestBody UserUpdateDTO user) {
         return userService.editUserProfile(user);
     }
 
     @GetMapping("/transactions")
-    public ArrayList<TransactionDTO> getAllTransactions() {
+    public ArrayList<FullTransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @PostMapping("/transactions")
-    public TransactionDTO createTransaction(@RequestBody TransactionDTO transaction) {
+    public FullTransactionDTO createTransaction(@RequestBody NewTransactionDTO transaction) {
         return transactionService.createTransaction(transaction);
     }
 
     @PutMapping("/transactions/")
-    public TransactionDTO updateTransaction(@RequestBody TransactionDTO transaction) {
+    public FullTransactionDTO updateTransaction(@RequestBody EditTransactionDTO transaction) {
         return transactionService.editTransaction(transaction);
     }
 
@@ -65,12 +61,12 @@ public class UserController {
     }
 
     @GetMapping("/accounts")
-    public ArrayList<AccountDTO> getAllAccounts() {
+    public ArrayList<FullUserAccountDTO> getAllAccounts() {
         return userAccountService.getAllAccounts();
     }
 
     @PostMapping("/accounts")
-    public AccountDTO createAccount(@RequestBody AccountDTO account) {
+    public FullUserAccountDTO createAccount(@RequestBody UserAccountDTO account) {
         return userAccountService.createAccount(account);
     }
 

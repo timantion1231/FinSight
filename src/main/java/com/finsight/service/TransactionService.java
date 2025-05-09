@@ -1,17 +1,19 @@
 package com.finsight.service;
 
-import com.finsight.DTO.TransactionDTO;
+import com.finsight.DTO.request.EditTransactionDTO;
+import com.finsight.DTO.request.NewTransactionDTO;
+import com.finsight.DTO.response.FullTransactionDTO;
 
 import java.util.ArrayList;
 
 public interface TransactionService {
-    public ArrayList<TransactionDTO> getAllTransactions();
+    public ArrayList<FullTransactionDTO> getAllTransactions();
 
-    public TransactionDTO getTransaction(int id);
+    public FullTransactionDTO getTransaction(int id);
 
-    public TransactionDTO editTransaction(TransactionDTO transaction);
+    public FullTransactionDTO editTransaction(EditTransactionDTO transaction);
 
-    public TransactionDTO createTransaction(TransactionDTO transaction);
+    public FullTransactionDTO createTransaction(NewTransactionDTO transaction);
 
     public String deleteTransaction(int id);
 

@@ -2,12 +2,18 @@ package com.finsight.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 
 @Entity
 @Table(name = "counterparties")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Counterparty {
 
     @Id
