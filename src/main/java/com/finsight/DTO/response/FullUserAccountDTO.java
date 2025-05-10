@@ -11,4 +11,5 @@ public class FullUserAccountDTO {
     private int id;
     private String accountNumber;
     private int bankId;
+    private int userId;
 }

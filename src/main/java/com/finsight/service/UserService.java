@@ -7,7 +7,7 @@ import com.finsight.DTO.response.ReportDTO;
 public interface UserService {
     public FullUserClientDTO getBaseUserProfile(int id);
 
-    public FullUserClientDTO editUserProfile(UserUpdateDTO user);
+    public FullUserClientDTO editUserProfile(int id, UserUpdateDTO user);
 
     public ReportDTO getReport(int userId);
 

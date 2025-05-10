@@ -17,8 +17,8 @@ public class FullTransactionDTO {
     private int amount;
     private String comment;
     private int userId;
-    private int counterPartyId;
+    private int counterpartyId;
     private boolean userIsSender;
+    private int accountId;
     private int categoryId;
-    private String receiverPhone;
 }

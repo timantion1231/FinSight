@@ -27,6 +27,11 @@ public class Transaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
+    @JoinColumn(name = "User_id", nullable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
     @JoinColumn(name = "transaction_type_id", nullable = false)
     private TransactionType transactionType;
 
@@ -37,7 +42,7 @@ public class Transaction {
 
     @NotNull
     @Column(name = "amount", nullable = false)
-    private int amount; // decimal(15,5)
+    private int amount;
 
     @Column(name = "comment")
     private String comment;

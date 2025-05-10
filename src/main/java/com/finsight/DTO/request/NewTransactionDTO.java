@@ -1,18 +1,23 @@
 package com.finsight.DTO.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.Instant;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class NewTransactionDTO {
+    private Instant dateTime;
+    private int transactionTypeId;
+    private int transactionStatusId;
+    private int amount;
+    private String comment;
+    private int userId;
+    private int counterpartyId;
+    private boolean userIsSender;
+    private int categoryId;
+    private int accountId;
 }
-/*
-{
-  "dateTime": "2025-05-04T13:09:30.469Z",
-  "transactionTypeId": 0,
-  "transactionStatusId": 0,
-  "amount": 0,
-  "comment": "string",
-  "userId": 0,
-  "counterpartyId": 0,
-  "userIsSender": true,
-  "categoryId": 0,
-  "receiverPhone": "string"
-}
- */

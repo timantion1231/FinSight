@@ -6,13 +6,13 @@ import com.finsight.DTO.response.FullUserAccountDTO;
 import java.util.ArrayList;
 
 public interface UserAccountService {
-    public ArrayList<FullUserAccountDTO> getAllAccounts();
+    public ArrayList<FullUserAccountDTO> getAllAccounts(int userId);
 
     public FullUserAccountDTO getAccount(int id);
 
     public FullUserAccountDTO createAccount(UserAccountDTO account);
 
-    public FullUserAccountDTO editAccount(UserAccountDTO account);
+    public FullUserAccountDTO editAccount(int id,UserAccountDTO account);
 
     public String deleteAccount(int id);
 }

@@ -1,7 +1,14 @@
 package com.finsight.DTO.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class EditTransactionDTO {
     private Instant dateTime;
     private int transactionTypeId;
@@ -9,22 +16,7 @@ public class EditTransactionDTO {
     private int amount;
     private String comment;
     private int accountId;
-    private int counterPartyId;
+    private int counterpartyId;
     private boolean userIsSender;
     private int categoryId;
 }
-/*
-{
-  "dateTime": "2025-05-04T13:11:50.222Z",
-  "transactionTypeId": 0,
-  "transactionStatusId": 0,
-  "amount": 0,
-  "comment": "string",
-  "userId": 0,
-  "counterpartyId": 0,
-  "userIsSender": true,
-  "receiverTin": "string",
-  "receiverPhone": "string",
-  "categoryId": 0
-}
- */

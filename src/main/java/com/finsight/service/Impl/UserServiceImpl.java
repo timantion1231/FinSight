@@ -38,7 +38,32 @@ public class UserServiceImpl implements UserService {
         dto.setPhoneNumber(user.getPhone());
         dto.setEmail(user.getEmail());
         dto.setTin(user.getTin());
-        List<Account> accounts = accountRepository.findByUserId(id);
+        dto.setAccounts(getAllAccounts(id));
+        return dto;
+    }
+
+    @Override
+    public FullUserClientDTO editUserProfile(int id, UserUpdateDTO user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+        existingUser.setEmail(user.getEmail());
+        existingUser.setName(user.getName());
+        existingUser.setPhone(user.getPhoneNumber());
+        existingUser.setTin(user.getTin());
+        userRepository.updateUserProfile(existingUser);
+        return getBaseUserProfile(existingUser.getId());
+    }
+
+
+    @Override
+    public ReportDTO getReport(int userId) {
+        return new ReportDTO();
+    }
+
+    private ArrayList<FullUserAccountDTO> getAllAccounts(int id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+        List<Account> accounts = accountRepository.findByUserId(user.getId());
         ArrayList<FullUserAccountDTO> userAccounts = new ArrayList<>();
         for (Account account : accounts) {
             FullUserAccountDTO accountDto = new FullUserAccountDTO();
@@ -47,19 +72,7 @@ public class UserServiceImpl implements UserService {
             accountDto.setBankId(account.getBank().getId());
             userAccounts.add(accountDto);
         }
-        dto.setAccounts(userAccounts);
-        return dto;
-    }
-
-    @Override
-    public FullUserClientDTO editUserProfile(UserUpdateDTO user) {
-        return Randomizer.randomize(FullUserClientDTO.class);
-    }
-
-
-    @Override
-    public ReportDTO getReport(int userId) {
-        return new ReportDTO();
+        return userAccounts;
     }
 
 }

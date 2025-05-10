@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserAccountDTO {
     private String accountNumber;
     private int bankId;
+    private int userId;
 }
