@@ -75,7 +75,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         if (account.getAccountNumber() == null || account.getUserId() == 0 || account.getBankId() == 0) {
             throw new IllegalArgumentException("All fields are required");
         }
-        FullUserAccountDTO dto = new FullUserAccountDTO();
         Account newAccount = new Account();
         newAccount.setId(id);
         newAccount.setAccountNumber(account.getAccountNumber());

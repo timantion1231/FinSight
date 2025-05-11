@@ -75,7 +75,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public FullTransactionDTO editTransaction(int id, EditTransactionDTO transaction) {
-        FullTransactionDTO dto = new FullTransactionDTO();
         if (transaction.getDateTime() == null || transaction.getTransactionTypeId() == 0 ||
                 transaction.getTransactionStatusId() == 0 || transaction.getAmount() == 0 ||
                 transaction.getAccountId() == 0 || transaction.getCounterpartyId() == 0 ||
@@ -137,8 +136,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public String deleteTransaction(int id) {
-        Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
         transactionRepository.deleteById(id);
         return "Transaction removed successfully";
     }

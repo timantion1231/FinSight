@@ -5,13 +5,13 @@ import com.finsight.DTO.general.*;
 import java.util.ArrayList;
 
 public interface RootService {
-    public ArrayList<EntityTypesDTO> getAllEntityTypes();
+    ArrayList<EntityTypesDTO> getAllEntityTypes();
 
-    public ArrayList<TransactionTypesDTO> getAllTransactionTypes();
+    ArrayList<TransactionTypesDTO> getAllTransactionTypes();
 
-    public ArrayList<TransactionStatusesDTO> getAllTransactionStatuses();
+    ArrayList<TransactionStatusesDTO> getAllTransactionStatuses();
 
-    public ArrayList<BankDTO> getAllBankDTO();
+    ArrayList<BankDTO> getAllBankDTO();
 
-    public ArrayList<CategoryDTO> getAllCategories();
+    ArrayList<CategoryDTO> getAllCategories();
 }

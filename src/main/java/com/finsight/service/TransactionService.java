@@ -7,14 +7,14 @@ import com.finsight.DTO.response.FullTransactionDTO;
 import java.util.ArrayList;
 
 public interface TransactionService {
-    public ArrayList<FullTransactionDTO> getAllTransactions(int userId);
+    ArrayList<FullTransactionDTO> getAllTransactions(int userId);
 
-    public FullTransactionDTO getTransaction(int id);
+    FullTransactionDTO getTransaction(int id);
 
-    public FullTransactionDTO editTransaction(int id, EditTransactionDTO transaction);
+    FullTransactionDTO editTransaction(int id, EditTransactionDTO transaction);
 
-    public FullTransactionDTO createTransaction(NewTransactionDTO transaction);
+    FullTransactionDTO createTransaction(NewTransactionDTO transaction);
 
-    public String deleteTransaction(int id);
+    String deleteTransaction(int id);
 
 }

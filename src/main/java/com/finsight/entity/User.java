@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Entity
 @Table(name = "users")
@@ -43,7 +42,7 @@ public class User {
     private String phone;
 
 
-    @NonNull
+    @NotNull
     @Column(name = "tin", nullable = false, unique = true, length = 12)
     private String tin;
 }

@@ -5,11 +5,11 @@ import com.finsight.DTO.response.FullUserClientDTO;
 import com.finsight.DTO.response.ReportDTO;
 
 public interface UserService {
-    public FullUserClientDTO getBaseUserProfile(int id);
+    FullUserClientDTO getBaseUserProfile(int id);
 
-    public FullUserClientDTO editUserProfile(int id, UserUpdateDTO user);
+    FullUserClientDTO editUserProfile(int id, UserUpdateDTO user);
 
-    public ReportDTO getReport(int userId);
+    ReportDTO getReport(int userId);
 
 
 }

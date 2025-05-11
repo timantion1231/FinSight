@@ -6,11 +6,11 @@ import com.finsight.DTO.response.FullCounterpartyDTO;
 import java.util.ArrayList;
 
 public interface CounterpartyService {
-    public ArrayList<FullCounterpartyDTO> getAllCounterparties(int userId);
+     ArrayList<FullCounterpartyDTO> getAllCounterparties(int userId);
 
-    public FullCounterpartyDTO createCounterparty(CounterpartyDTO counterParty);
+     FullCounterpartyDTO createCounterparty(CounterpartyDTO counterParty);
 
-    public FullCounterpartyDTO updateCounterparty(int id, CounterpartyDTO counterparty);
+     FullCounterpartyDTO updateCounterparty(int id, CounterpartyDTO counterparty);
 
-    public String deleteCounterparty(int id);
+     String deleteCounterparty(int id);
 }

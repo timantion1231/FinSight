@@ -22,11 +22,6 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     @Autowired
     public CounterpartyServiceImpl(CounterpartyRepository counterpartyRepository,
                                    UserRepository userRepository,
-                                   TransactionRepository transactionRepository,
-                                   AccountRepository accountRepository,
-                                   TransactionTypeRepository transactionTypeRepository,
-                                   TransactionStatusRepository transactionStatusRepository,
-                                   CategoryRepository categoryRepository,
                                    EntityTypeRepository entityTypeRepository,
                                    BankRepository bankRepository) {
         this.counterpartyRepository = counterpartyRepository;
