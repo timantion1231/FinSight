@@ -3,6 +3,7 @@ package com.finsight.service.Impl;
 import com.finsight.DTO.request.UserAccountDTO;
 import com.finsight.DTO.response.FullUserAccountDTO;
 import com.finsight.entity.Account;
+import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.AccountRepository;
 import com.finsight.repository.BankRepository;
 import com.finsight.repository.UserRepository;
@@ -49,18 +50,21 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public FullUserAccountDTO getAccount(int id) {
         Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Account not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + id));
         return mapAccountToDTO(account);
     }
 
     @Override
     public FullUserAccountDTO createAccount(UserAccountDTO account) {
+        if (account.getAccountNumber() == null || account.getUserId() == 0 || account.getBankId() == 0) {
+            throw new IllegalArgumentException("All fields are required");
+        }
         Account newAccount = new Account();
         newAccount.setAccountNumber(account.getAccountNumber());
         newAccount.setUser(userRepository.findById(account.getUserId()).orElseThrow(() ->
-                new IllegalArgumentException("User not found with id: " + account.getUserId())));
+                new ResourceNotFoundException("User not found with id: " + account.getUserId())));
         newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
-                new IllegalArgumentException("Bank not found with id: " + account.getBankId())));
+                new ResourceNotFoundException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
         return mapAccountToDTO(newAccount);
 
@@ -68,14 +72,17 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public FullUserAccountDTO editAccount(int id, UserAccountDTO account) {
+        if (account.getAccountNumber() == null || account.getUserId() == 0 || account.getBankId() == 0) {
+            throw new IllegalArgumentException("All fields are required");
+        }
         FullUserAccountDTO dto = new FullUserAccountDTO();
         Account newAccount = new Account();
         newAccount.setId(id);
         newAccount.setAccountNumber(account.getAccountNumber());
         newAccount.setUser(userRepository.findById(account.getUserId()).orElseThrow(() ->
-                new IllegalArgumentException("User not found with id: " + account.getUserId())));
+                new ResourceNotFoundException("User not found with id: " + account.getUserId())));
         newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
-                new IllegalArgumentException("Bank not found with id: " + account.getBankId())));
+                new ResourceNotFoundException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
         return mapAccountToDTO(newAccount);
     }

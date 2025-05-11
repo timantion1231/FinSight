@@ -5,6 +5,7 @@ import com.finsight.DTO.response.FullCounterpartyDTO;
 import com.finsight.entity.Counterparty;
 import com.finsight.repository.*;
 import com.finsight.service.CounterpartyService;
+import com.finsight.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,11 +66,11 @@ public class CounterpartyServiceImpl implements CounterpartyService {
         newCounterparty.setPhoneNumber(counterparty.getPhoneNumber());
         newCounterparty.setAccountNumber(counterparty.getAccountNumber());
         newCounterparty.setEntityType(entityTypeRepository.findById(counterparty.getEntityTypeId())
-                .orElseThrow(() -> new IllegalArgumentException("Entity type not found with id: " + counterparty.getEntityTypeId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Entity type not found with id: " + counterparty.getEntityTypeId())));
         newCounterparty.setBank(bankRepository.findById(counterparty.getBankId())
-                .orElseThrow(() -> new IllegalArgumentException("Bank not found with id: " + counterparty.getBankId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Bank not found with id: " + counterparty.getBankId())));
         newCounterparty.setUser(userRepository.findById(counterparty.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + counterparty.getUserId())));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + counterparty.getUserId())));
         counterpartyRepository.save(newCounterparty);
         return mapCounterpartyToDTO(newCounterparty);
     }
@@ -77,17 +78,17 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     @Override
     public FullCounterpartyDTO updateCounterparty(int id, CounterpartyDTO dto) {
         Counterparty counterparty = counterpartyRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Counterparty not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Counterparty not found with id: " + id));
         counterparty.setEntityType(entityTypeRepository.findById(dto.getEntityTypeId())
-                .orElseThrow(() -> new IllegalArgumentException("Entity type not found with id: " + dto.getEntityTypeId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Entity type not found with id: " + dto.getEntityTypeId())));
         counterparty.setTin(dto.getTin());
         counterparty.setName(dto.getName());
         counterparty.setPhoneNumber(dto.getPhoneNumber());
         counterparty.setAccountNumber(dto.getAccountNumber());
         counterparty.setBank(bankRepository.findById(dto.getBankId())
-                .orElseThrow(() -> new IllegalArgumentException("Bank not found with id: " + dto.getBankId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Bank not found with id: " + dto.getBankId())));
         counterparty.setUser(userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + dto.getUserId())));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + dto.getUserId())));
         counterpartyRepository.save(counterparty);
         return mapCounterpartyToDTO(counterparty);
     }

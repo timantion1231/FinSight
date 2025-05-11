@@ -2,6 +2,7 @@ package com.finsight.service.Impl;
 
 import com.finsight.DTO.general.*;
 import com.finsight.entity.*;
+import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
 import com.finsight.service.RootService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,10 @@ public class RootServiceImpl implements RootService {
 
     @Override
     public ArrayList<EntityTypesDTO> getAllEntityTypes() {
-        List<EntityType> list;
-        list = entityTypeRepository.findAll();
+        List<EntityType> list = entityTypeRepository.findAll();
+        if (list.isEmpty()) {
+            throw new ResourceNotFoundException("No entity types found");
+        }
         ArrayList<EntityTypesDTO> entityTypesDTOs = new ArrayList<>();
         for (EntityType entityType : list) {
             EntityTypesDTO entityTypesDTO = new EntityTypesDTO();

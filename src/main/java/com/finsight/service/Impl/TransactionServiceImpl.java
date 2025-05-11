@@ -4,6 +4,7 @@ import com.finsight.DTO.request.EditTransactionDTO;
 import com.finsight.DTO.request.NewTransactionDTO;
 import com.finsight.DTO.response.FullTransactionDTO;
 import com.finsight.entity.Transaction;
+import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
 import com.finsight.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public FullTransactionDTO getTransaction(int id) {
         Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
         return mapTransactionToDTO(transaction);
     }
 
@@ -75,26 +76,32 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public FullTransactionDTO editTransaction(int id, EditTransactionDTO transaction) {
         FullTransactionDTO dto = new FullTransactionDTO();
+        if (transaction.getDateTime() == null || transaction.getTransactionTypeId() == 0 ||
+                transaction.getTransactionStatusId() == 0 || transaction.getAmount() == 0 ||
+                transaction.getAccountId() == 0 || transaction.getCounterpartyId() == 0 ||
+                transaction.getCategoryId() == 0) {
+            throw new IllegalArgumentException("All fields are required");
+        }
         Transaction existingTransaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
         existingTransaction.setDateTime(transaction.getDateTime());
         existingTransaction.setTransactionType(transactionTypeRepository.findById(
-                transaction.getTransactionTypeId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getTransactionTypeId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Transaction type not found with id: " + transaction.getTransactionTypeId())));
         existingTransaction.setTransactionStatus(transactionStatusRepository.findById(
-                transaction.getTransactionStatusId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getTransactionStatusId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Transaction status not found with id: " + transaction.getTransactionStatusId())));
         existingTransaction.setAmount(transaction.getAmount());
         existingTransaction.setComment(transaction.getComment());
         existingTransaction.setAccount(accountRepository.findById(
-                transaction.getAccountId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getAccountId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Account not found with id: " + transaction.getAccountId())));
         existingTransaction.setCounterparty(counterpartyRepository.findById(
-                transaction.getCounterpartyId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getCounterpartyId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Counterparty not found with id: " + transaction.getCounterpartyId())));
         existingTransaction.setUserSender(transaction.isUserIsSender());
         existingTransaction.setCategories(categoryRepository.findById(
-                transaction.getCategoryId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Category not found with id: " + transaction.getCategoryId())));
         transactionRepository.save(existingTransaction);
         return mapTransactionToDTO(existingTransaction);
@@ -105,25 +112,25 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction newTransaction = new Transaction();
         newTransaction.setDateTime(transaction.getDateTime());
         newTransaction.setTransactionType(transactionTypeRepository.findById(
-                transaction.getTransactionTypeId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getTransactionTypeId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Transaction type not found with id: " + transaction.getTransactionTypeId())));
         newTransaction.setTransactionStatus(transactionStatusRepository.findById(
-                transaction.getTransactionStatusId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getTransactionStatusId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Transaction status not found with id: " + transaction.getTransactionStatusId())));
         newTransaction.setAmount(transaction.getAmount());
         newTransaction.setComment(transaction.getComment());
         newTransaction.setAccount(accountRepository.findById(
-                transaction.getAccountId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getAccountId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Account not found with id: " + transaction.getAccountId())));
         newTransaction.setCounterparty(counterpartyRepository.findById(
-                transaction.getCounterpartyId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getCounterpartyId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Counterparty not found with id: " + transaction.getCounterpartyId())));
         newTransaction.setUserSender(transaction.isUserIsSender());
         newTransaction.setCategories(categoryRepository.findById(
-                transaction.getCategoryId()).orElseThrow(() -> new IllegalArgumentException(
+                transaction.getCategoryId()).orElseThrow(() -> new ResourceNotFoundException(
                 "Category not found with id: " + transaction.getCategoryId())));
         newTransaction.setUser(userRepository.findById(transaction.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + transaction.getUserId())));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + transaction.getUserId())));
         transactionRepository.save(newTransaction);
         return mapTransactionToDTO(newTransaction);
     }
@@ -131,7 +138,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public String deleteTransaction(int id) {
         Transaction transaction = transactionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Transaction not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found with id: " + id));
         transactionRepository.deleteById(id);
         return "Transaction removed successfully";
     }

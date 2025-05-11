@@ -6,6 +6,7 @@ import com.finsight.DTO.response.FullUserClientDTO;
 import com.finsight.DTO.response.ReportDTO;
 import com.finsight.entity.Account;
 import com.finsight.entity.User;
+import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.AccountRepository;
 import com.finsight.repository.UserRepository;
 import com.finsight.service.UserService;
@@ -27,9 +28,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public FullUserClientDTO getBaseUserProfile(int id) {//обращение к бд и тд
+    public FullUserClientDTO getBaseUserProfile(int id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id)); // Updated exception
         FullUserClientDTO dto = new FullUserClientDTO();
         dto.setId(user.getId());
         dto.setName(user.getName());
@@ -42,8 +43,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public FullUserClientDTO editUserProfile(int id, UserUpdateDTO user) {
+        if (user.getEmail() == null || user.getName() == null || user.getPhoneNumber() == null || user.getTin() == null) {
+            throw new IllegalArgumentException("All fields are required");
+        }
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id)); // Updated exception
         existingUser.setEmail(user.getEmail());
         existingUser.setName(user.getName());
         existingUser.setPhone(user.getPhoneNumber());
@@ -52,7 +56,6 @@ public class UserServiceImpl implements UserService {
         return getBaseUserProfile(existingUser.getId());
     }
 
-
     @Override
     public ReportDTO getReport(int userId) {
         return new ReportDTO();
@@ -60,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     private ArrayList<FullUserAccountDTO> getAllAccounts(int id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id)); // Updated exception
         List<Account> accounts = accountRepository.findByUserId(user.getId());
         ArrayList<FullUserAccountDTO> userAccounts = new ArrayList<>();
         for (Account account : accounts) {
@@ -72,6 +75,4 @@ public class UserServiceImpl implements UserService {
         }
         return userAccounts;
     }
-
 }
-
