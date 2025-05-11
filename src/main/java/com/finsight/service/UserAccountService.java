@@ -12,7 +12,7 @@ public interface UserAccountService {
 
     public FullUserAccountDTO createAccount(UserAccountDTO account);
 
-    public FullUserAccountDTO editAccount(int id,UserAccountDTO account);
+    public FullUserAccountDTO editAccount(int id, UserAccountDTO account);
 
     public String deleteAccount(int id);
 }

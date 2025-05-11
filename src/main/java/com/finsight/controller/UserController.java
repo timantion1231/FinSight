@@ -37,12 +37,14 @@ public class UserController {
     }
 
     @PutMapping("/profile/{id}")
-    public ResponseEntity<FullUserClientDTO> updateUser(@PathVariable int id, @RequestBody UserUpdateDTO user) {
+    public ResponseEntity<FullUserClientDTO> updateUser(@PathVariable int id,
+                                                        @RequestBody UserUpdateDTO user) {
         return ResponseEntity.ok(userService.editUserProfile(id, user));
     }
 
     @GetMapping("/transactions/{userId}")
-    public ResponseEntity<ArrayList<FullTransactionDTO>> getAllTransactions(@PathVariable int userId) {
+    public ResponseEntity<ArrayList<FullTransactionDTO>> getAllTransactions(
+            @PathVariable int userId) {
         return ResponseEntity.ok(transactionService.getAllTransactions(userId));
     }
 
@@ -52,12 +54,14 @@ public class UserController {
     }
 
     @PostMapping("/transactions")
-    public ResponseEntity<FullTransactionDTO> createTransaction(@RequestBody NewTransactionDTO transaction) {
+    public ResponseEntity<FullTransactionDTO> createTransaction(
+            @RequestBody NewTransactionDTO transaction) {
         return ResponseEntity.ok(transactionService.createTransaction(transaction));
     }
 
     @PutMapping("/transactions/{id}")
-    public ResponseEntity<FullTransactionDTO> updateTransaction(@PathVariable int id, @RequestBody EditTransactionDTO transaction) {
+    public ResponseEntity<FullTransactionDTO> updateTransaction(
+            @PathVariable int id, @RequestBody EditTransactionDTO transaction) {
         return ResponseEntity.ok(transactionService.editTransaction(id, transaction));
     }
 
@@ -82,7 +86,8 @@ public class UserController {
     }
 
     @PutMapping("/accounts/{id}")
-    public ResponseEntity<FullUserAccountDTO> updateAccount(@PathVariable int id, @RequestBody UserAccountDTO account) {
+    public ResponseEntity<FullUserAccountDTO> updateAccount(@PathVariable int id,
+                                                            @RequestBody UserAccountDTO account) {
         return ResponseEntity.ok(userAccountService.editAccount(id, account));
     }
 
@@ -91,19 +96,22 @@ public class UserController {
         return ResponseEntity.ok(userAccountService.deleteAccount(id));
     }
 
-    @GetMapping("/counterparties")
-    public ResponseEntity<ArrayList<FullCounterpartyDTO>> getAllCounterParties() {
-        return ResponseEntity.ok(counterpartyService.getAllCounterparties());
+    @GetMapping("/counterparties/{userId}")
+    public ResponseEntity<ArrayList<FullCounterpartyDTO>> getAllCounterParties(
+            @PathVariable int userId) {
+        return ResponseEntity.ok(counterpartyService.getAllCounterparties(userId));
     }
 
     @PostMapping("/counterparties")
-    public ResponseEntity<FullCounterpartyDTO> createCounterparty(@RequestBody CounterPartyDTO counterParty) {
+    public ResponseEntity<FullCounterpartyDTO> createCounterparty(
+            @RequestBody CounterpartyDTO counterParty) {
         return ResponseEntity.ok(counterpartyService.createCounterparty(counterParty));
     }
 
-    @PutMapping("/counterparties")
-    public ResponseEntity<FullCounterpartyDTO> updateCounterparty(@RequestBody FullCounterpartyDTO counterparty) {
-        return ResponseEntity.ok(counterpartyService.updateCounterparty(counterparty));
+    @PutMapping("/counterparties/{id}")
+    public ResponseEntity<FullCounterpartyDTO> updateCounterparty(
+            @PathVariable int id, @RequestBody CounterpartyDTO counterparty) {
+        return ResponseEntity.ok(counterpartyService.updateCounterparty(id, counterparty));
     }
 
     @DeleteMapping("/counterparties/{id}")

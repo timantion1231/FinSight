@@ -90,12 +90,6 @@
 			<version>3.24.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Random Beans -->
-		<dependency>
-			<groupId>io.github.benas</groupId>
-			<artifactId>random-beans</artifactId>
-			<version>3.9.0</version>
-		</dependency>
 		<!-- Jackson Databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

@@ -4,7 +4,6 @@ import com.finsight.DTO.request.UserUpdateDTO;
 import com.finsight.DTO.response.FullUserAccountDTO;
 import com.finsight.DTO.response.FullUserClientDTO;
 import com.finsight.DTO.response.ReportDTO;
-import com.finsight.Randomizer;
 import com.finsight.entity.Account;
 import com.finsight.entity.User;
 import com.finsight.repository.AccountRepository;
@@ -12,7 +11,6 @@ import com.finsight.repository.UserRepository;
 import com.finsight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.finsight.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +58,7 @@ public class UserServiceImpl implements UserService {
         return new ReportDTO();
     }
 
-    private ArrayList<FullUserAccountDTO> getAllAccounts(int id){
+    private ArrayList<FullUserAccountDTO> getAllAccounts(int id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
         List<Account> accounts = accountRepository.findByUserId(user.getId());

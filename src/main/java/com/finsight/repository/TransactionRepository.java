@@ -9,13 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
     List<Transaction> getAllByUserId(int userId);
-
 
     @Modifying
     @Transactional
@@ -29,22 +26,13 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
                            @Param("amount") int amount,
                            @Param("dateTime") Instant dateTime,
                            @Param("transactionType") TransactionType transactionType,
-                           @Param("transactionStatus") TransactionStatus transactionStatus,
+                           @Param("transactionStatus") TransactionStatusRepository transactionStatus,
                            @Param("comment") String comment,
                            @Param("account") Account account,
                            @Param("counterparty") Counterparty counterparty,
                            @Param("user") User user,
                            @Param("isUserSender") boolean isUserSender,
                            @Param("categories") Categories categories);
-
-    @Query("SELECT t.transactionType FROM Transaction t WHERE t.id = :id")
-    TransactionType getTransactionTypeById(@Param("id") int id);
-
-    @Query("SELECT t.transactionStatus FROM Transaction t WHERE t.id = :id")
-    TransactionStatus getTransactionStatusById(@Param("id") int id);
-
-    @Query("SELECT t.categories FROM Transaction t WHERE t.id = :id")
-    Categories getCategoriesById(@Param("id") int id);
 
     void deleteById(int id);
 }

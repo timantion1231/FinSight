@@ -2,9 +2,9 @@ package com.finsight.service.Impl;
 
 import com.finsight.DTO.request.UserAccountDTO;
 import com.finsight.DTO.response.FullUserAccountDTO;
-import com.finsight.Randomizer;
 import com.finsight.entity.Account;
 import com.finsight.repository.AccountRepository;
+import com.finsight.repository.BankRepository;
 import com.finsight.repository.UserRepository;
 import com.finsight.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,15 @@ import java.util.ArrayList;
 public class UserAccountServiceImpl implements UserAccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final BankRepository bankRepository;
 
     @Autowired
     public UserAccountServiceImpl(AccountRepository accountRepository,
-                                  UserRepository userRepository) {
+                                  UserRepository userRepository,
+                                  BankRepository bankRepository) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.bankRepository = bankRepository;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         newAccount.setAccountNumber(account.getAccountNumber());
         newAccount.setUser(userRepository.findById(account.getUserId()).orElseThrow(() ->
                 new IllegalArgumentException("User not found with id: " + account.getUserId())));
-        newAccount.setBank(accountRepository.findBankById(account.getBankId()).orElseThrow(() ->
+        newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
                 new IllegalArgumentException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
         return mapAccountToDTO(newAccount);
@@ -71,7 +74,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         newAccount.setAccountNumber(account.getAccountNumber());
         newAccount.setUser(userRepository.findById(account.getUserId()).orElseThrow(() ->
                 new IllegalArgumentException("User not found with id: " + account.getUserId())));
-        newAccount.setBank(accountRepository.findBankById(account.getBankId()).orElseThrow(() ->
+        newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
                 new IllegalArgumentException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
         return mapAccountToDTO(newAccount);

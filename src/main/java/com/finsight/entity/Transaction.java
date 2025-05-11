@@ -66,4 +66,9 @@ public class Transaction {
     @JoinColumn(name = "category_id", nullable = false)
     private Categories categories;
 
+    @PrePersist
+    protected void onCreate() {
+        this.dateTime = Instant.now();
+    }
+
 }

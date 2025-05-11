@@ -56,4 +56,9 @@ public class Counterparty {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
 }

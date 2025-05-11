@@ -1,72 +1,104 @@
 package com.finsight.service.Impl;
 
 import com.finsight.DTO.general.*;
+import com.finsight.entity.*;
+import com.finsight.repository.*;
 import com.finsight.service.RootService;
-import io.github.benas.randombeans.EnhancedRandomBuilder;
-import io.github.benas.randombeans.api.EnhancedRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RootServiceImpl implements RootService {
 
-    private EnhancedRandom rnd;
+    private final TransactionStatusRepository transactionStatusRepository;
+    private final TransactionTypeRepository transactionTypeRepository;
+    private final BankRepository bankRepository;
+    private final CategoryRepository categoryRepository;
+    private final EntityTypeRepository entityTypeRepository;
 
     @Autowired
-    public RootServiceImpl(){
-
+    public RootServiceImpl(TransactionTypeRepository transactionTypeRepository,
+                           TransactionStatusRepository transactionStatusRepository,
+                           BankRepository bankRepository,
+                           CategoryRepository categoryRepository,
+                           EntityTypeRepository entityTypeRepository) {
+        this.transactionTypeRepository = transactionTypeRepository;
+        this.transactionStatusRepository = transactionStatusRepository;
+        this.bankRepository = bankRepository;
+        this.categoryRepository = categoryRepository;
+        this.entityTypeRepository = entityTypeRepository;
     }
 
     @Override
     public ArrayList<EntityTypesDTO> getAllEntityTypes() {
-        rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
-        ArrayList<EntityTypesDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(rnd.nextObject(EntityTypesDTO.class));
+        List<EntityType> list;
+        list = entityTypeRepository.findAll();
+        ArrayList<EntityTypesDTO> entityTypesDTOs = new ArrayList<>();
+        for (EntityType entityType : list) {
+            EntityTypesDTO entityTypesDTO = new EntityTypesDTO();
+            entityTypesDTO.setId(entityType.getId());
+            entityTypesDTO.setName(entityType.getName());
+            entityTypesDTOs.add(entityTypesDTO);
         }
-        return list;
+        return entityTypesDTOs;
     }
 
     @Override
     public ArrayList<TransactionTypesDTO> getAllTransactionTypes() {
-        rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
-        ArrayList<TransactionTypesDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(rnd.nextObject(TransactionTypesDTO.class));
+        List<TransactionType> list;
+        list = transactionTypeRepository.findAll();
+        ArrayList<TransactionTypesDTO> transactionTypesDTOs = new ArrayList<>();
+        for (TransactionType transactionType : list) {
+            TransactionTypesDTO transactionTypesDTO = new TransactionTypesDTO();
+            transactionTypesDTO.setId(transactionType.getId());
+            transactionTypesDTO.setName(transactionType.getName());
+            transactionTypesDTOs.add(transactionTypesDTO);
         }
-        return list;
+        return transactionTypesDTOs;
     }
 
     @Override
     public ArrayList<TransactionStatusesDTO> getAllTransactionStatuses() {
-        rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
-        ArrayList<TransactionStatusesDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(rnd.nextObject(TransactionStatusesDTO.class));
+        List<TransactionStatus> list;
+        list = transactionStatusRepository.findAll();
+        ArrayList<TransactionStatusesDTO> transactionStatusesDTOs = new ArrayList<>();
+        for (TransactionStatus transactionStatus : list) {
+            TransactionStatusesDTO transactionStatusesDTO = new TransactionStatusesDTO();
+            transactionStatusesDTO.setId(transactionStatus.getId());
+            transactionStatusesDTO.setName(transactionStatus.getName());
+            transactionStatusesDTOs.add(transactionStatusesDTO);
         }
-        return list;
+        return transactionStatusesDTOs;
     }
 
     @Override
     public ArrayList<BankDTO> getAllBankDTO() {
-        rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
-        ArrayList<BankDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(rnd.nextObject(BankDTO.class));
+        List<Bank> list;
+        list = bankRepository.findAll();
+        ArrayList<BankDTO> bankDTOs = new ArrayList<>();
+        for (Bank bank : list) {
+            BankDTO bankDTO = new BankDTO();
+            bankDTO.setId(bank.getId());
+            bankDTO.setName(bank.getName());
+            bankDTOs.add(bankDTO);
         }
-        return list;
+        return bankDTOs;
     }
 
     @Override
     public ArrayList<CategoryDTO> getAllCategories() {
-        rnd = EnhancedRandomBuilder.aNewEnhancedRandom();
-        ArrayList<CategoryDTO> list = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            list.add(rnd.nextObject(CategoryDTO.class));
+        List<Categories> list;
+        list = categoryRepository.findAll();
+        ArrayList<CategoryDTO> categoryDTOs = new ArrayList<>();
+        for (Categories categories : list) {
+            CategoryDTO categoryDTO = new CategoryDTO();
+            categoryDTO.setId(categories.getId());
+            categoryDTO.setName(categories.getName());
+            categoryDTOs.add(categoryDTO);
         }
-        return list;
+        return categoryDTOs;
     }
-
 }
