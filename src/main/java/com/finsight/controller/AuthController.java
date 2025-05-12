@@ -1,10 +1,10 @@
 package com.finsight.controller;
 
 import com.finsight.DTO.request.LoginDTO;
-import com.finsight.DTO.request.RegisterUserDTO;  // Используйте правильный DTO
+import com.finsight.DTO.request.RegisterUserDTO;
 import com.finsight.entity.User;
-import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +15,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    private final AuthService authService;  // Используйте AuthService, а не UserService
+    private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, AuthService authService, PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager,
+                          AuthService authService,
+                          PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.authService = authService;
         this.passwordEncoder = passwordEncoder;
@@ -38,28 +38,33 @@ public class AuthController {
         try {
             User user = authService.register(registerUserDTO);
             return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     // Логин пользователя
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
-        );
+    public ResponseEntity<String> login(@Valid @RequestBody LoginDTO loginDTO) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
+            );
 
-        // Успешная аутентификация
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return ResponseEntity.ok("Login successful");
 
-        return new ResponseEntity<>("Login successful", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    // Пример выхода из системы
+    // Выход из системы
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         SecurityContextHolder.clearContext();
-        return new ResponseEntity<>("Logout successful", HttpStatus.OK);
+        return ResponseEntity.ok("Logout successful");
     }
 }
