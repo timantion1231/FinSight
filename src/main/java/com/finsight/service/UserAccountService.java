@@ -1,19 +1,18 @@
 package com.finsight.service;
 
-import com.finsight.DTO.request.FullUserAccountDTO;
-import com.finsight.DTO.response.ResponseFullUserAccountDTO;
-import com.finsight.DTO.response.UserAccountDTO;
+import com.finsight.DTO.request.UserAccountDTO;
+import com.finsight.DTO.response.FullUserAccountDTO;
 
 import java.util.ArrayList;
 
 public interface UserAccountService {
-    ArrayList<UserAccountDTO> getAllAccounts(int userId);
+    ArrayList<FullUserAccountDTO> getAllAccounts(int userId);
 
-    ResponseFullUserAccountDTO getAccount(int id);
+    FullUserAccountDTO getAccount(int id);
 
-    UserAccountDTO createAccount(FullUserAccountDTO account);
+    FullUserAccountDTO createAccount(UserAccountDTO account);
 
-    ResponseFullUserAccountDTO editAccount(int id, FullUserAccountDTO account);
+    FullUserAccountDTO editAccount(int id, UserAccountDTO account);
 
     String deleteAccount(int id);
 }

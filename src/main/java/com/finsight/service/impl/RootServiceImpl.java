@@ -1,4 +1,4 @@
-package com.finsight.service.Impl;
+package com.finsight.service.impl;
 
 import com.finsight.DTO.general.*;
 import com.finsight.entity.*;

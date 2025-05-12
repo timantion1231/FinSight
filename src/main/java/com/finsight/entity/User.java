@@ -8,6 +8,11 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
@@ -29,7 +34,6 @@ public class User {
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
-
     @NotNull
     @Column(name = "password", nullable = false)
     private String password;
@@ -41,8 +45,12 @@ public class User {
     @JsonProperty("phoneNumber")
     private String phone;
 
-
     @NotNull
     @Column(name = "tin", nullable = false, unique = true, length = 12)
     private String tin;
+
+    // Метод для возврата прав доступа пользователя (пока возвращаем пустой список)
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));  // Можно оставить роль по умолчанию
+    }
 }

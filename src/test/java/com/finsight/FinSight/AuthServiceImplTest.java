@@ -3,7 +3,7 @@ package com.finsight.FinSight;
 import com.finsight.DTO.request.RegisterUserDTO;
 import com.finsight.exceptions.EmailAlreadyExistsException;
 import com.finsight.repository.UserRepository;
-import com.finsight.service.Impl.AuthServiceImpl;
+import com.finsight.service.impl.AuthServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

@@ -4,7 +4,7 @@ import com.finsight.DTO.request.FullUserAccountDTO;
 import com.finsight.entity.*;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
-import com.finsight.service.Impl.UserAccountServiceImpl;
+import com.finsight.service.impl.UserAccountServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

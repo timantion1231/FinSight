@@ -1,4 +1,4 @@
-package com.finsight.service.Impl;
+package com.finsight.service.impl;
 
 import com.finsight.DTO.request.CounterpartyDTO;
 import com.finsight.DTO.response.FullCounterpartyDTO;

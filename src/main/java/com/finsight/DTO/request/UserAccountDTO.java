@@ -1,4 +1,4 @@
-package com.finsight.DTO.response;
+package com.finsight.DTO.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class UserAccountDTO {
     private String accountNumber;
     private int bankId;
+    private int userId;
 }
