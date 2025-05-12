@@ -2,6 +2,7 @@ package com.finsight.FinSight;
 
 import com.finsight.DTO.request.EditTransactionDTO;
 import com.finsight.DTO.request.NewTransactionDTO;
+import com.finsight.DTO.response.FullTransactionDTO;
 import com.finsight.entity.*;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
@@ -33,6 +34,7 @@ class TransactionServiceImplTest {
     @InjectMocks
     TransactionServiceImpl transactionService;
 
+
     @Test
     void testGetTransaction_notFound() {
         when(transactionRepository.findById(100)).thenReturn(Optional.empty());
@@ -58,12 +60,12 @@ class TransactionServiceImplTest {
 
     @Test
     void testEditTransaction_invalidFields_shouldThrow() {
-        EditTransactionDTO dto = new EditTransactionDTO(); // все поля 0/null
+        EditTransactionDTO dto = new EditTransactionDTO();
         assertThrows(IllegalArgumentException.class, () -> transactionService.editTransaction(1, dto));
     }
 
     @Test
-    void testGetAllTransactions_returnsList() {
+    void testGetAllTransactions_returns() {
         Transaction tx = new Transaction();
         User user = new User(); user.setId(1);
         Account acc = new Account(); acc.setId(1);
@@ -105,6 +107,49 @@ class TransactionServiceImplTest {
         when(categoryRepository.findById(1)).thenReturn(Optional.of(new Categories()));
 
         assertThrows(ResourceNotFoundException.class, () -> transactionService.createTransaction(dto));
+    }
+
+    @Test
+    void testCreateTransaction_success() {
+        NewTransactionDTO dto = new NewTransactionDTO();
+        dto.setUserId(1);
+        dto.setTransactionTypeId(1);
+        dto.setTransactionStatusId(2);
+        dto.setAccountId(3);
+        dto.setCounterpartyId(4);
+        dto.setCategoryId(5);
+        dto.setAmount(1000);
+
+        User user = new User(); user.setId(1);
+        Account account = new Account(); account.setId(3);
+        Counterparty cp = new Counterparty(); cp.setId(4);
+        TransactionType type = new TransactionType(); type.setId(1);
+        TransactionStatus status = new TransactionStatus(); status.setId(2);
+        Categories cat = new Categories(); cat.setId(5);
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(transactionTypeRepository.findById(1)).thenReturn(Optional.of(type));
+        when(transactionStatusRepository.findById(2)).thenReturn(Optional.of(status));
+        when(accountRepository.findById(3)).thenReturn(Optional.of(account));
+        when(counterpartyRepository.findById(4)).thenReturn(Optional.of(cp));
+        when(categoryRepository.findById(5)).thenReturn(Optional.of(cat));
+        when(transactionRepository.save(any(Transaction.class))).thenAnswer(i -> {
+            Transaction saved = i.getArgument(0);
+            saved.setId(99); // эмулируем сохранение с ID
+            return saved;
+        });
+
+        FullTransactionDTO result = transactionService.createTransaction(dto);
+
+        assertNotNull(result);
+        assertEquals(99, result.getId());
+        assertEquals(1000, result.getAmount());
+        assertEquals(3, result.getAccountId());
+        assertEquals(1, result.getUserId());
+        assertEquals(4, result.getCounterpartyId());
+        assertEquals(1, result.getTransactionTypeId());
+        assertEquals(2, result.getTransactionStatusId());
+        assertEquals(5, result.getCategoryId());
     }
 }
 

@@ -56,7 +56,7 @@ class UserAccountServiceImplTest {
 
     @Test
     void testCreateAccount_missingFields_shouldThrow() {
-        UserAccountDTO dto = new UserAccountDTO(); // все поля null
+        UserAccountDTO dto = new UserAccountDTO();
         assertThrows(IllegalArgumentException.class, () -> service.createAccount(dto));
     }
 

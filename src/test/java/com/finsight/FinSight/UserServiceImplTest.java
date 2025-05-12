@@ -91,7 +91,7 @@ class UserServiceImplTest {
 
     @Test
     void testEditUserProfile_missingFields_shouldThrow() {
-        UserUpdateDTO updateDTO = new UserUpdateDTO(); // все поля null
+        UserUpdateDTO updateDTO = new UserUpdateDTO();
         assertThrows(IllegalArgumentException.class, () -> userService.editUserProfile(1, updateDTO));
     }
 
