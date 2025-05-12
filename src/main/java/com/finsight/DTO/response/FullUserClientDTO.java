@@ -16,5 +16,5 @@ public class FullUserClientDTO {
     private String email;
     private int entityTypeId;
     private String tin;
-    private ArrayList<FullUserAccountDTO> accounts;
+    private ArrayList<ResponseFullUserAccountDTO> accounts;
 }

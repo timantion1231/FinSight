@@ -1,7 +1,8 @@
 package com.finsight.service.Impl;
 
-import com.finsight.DTO.request.UserAccountDTO;
-import com.finsight.DTO.response.FullUserAccountDTO;
+import com.finsight.DTO.request.FullUserAccountDTO;
+import com.finsight.DTO.response.ResponseFullUserAccountDTO;
+import com.finsight.DTO.response.UserAccountDTO;
 import com.finsight.entity.Account;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.AccountRepository;
@@ -29,17 +30,17 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    public ArrayList<FullUserAccountDTO> getAllAccounts(int userId) {
+    public ArrayList<UserAccountDTO> getAllAccounts(int userId) {
         ArrayList<Account> accounts = (ArrayList<Account>) accountRepository.findByUserId(userId);
-        ArrayList<FullUserAccountDTO> dtos = new ArrayList<>();
+        ArrayList<UserAccountDTO> dtos = new ArrayList<>();
         for (Account account : accounts) {
             dtos.add(mapAccountToDTO(account));
         }
         return dtos;
     }
 
-    private FullUserAccountDTO mapAccountToDTO(Account account) {
-        FullUserAccountDTO dto = new FullUserAccountDTO();
+    private ResponseFullUserAccountDTO mapResponseAccountToDTO(Account account) {
+        ResponseFullUserAccountDTO dto = new ResponseFullUserAccountDTO();
         dto.setId(account.getId());
         dto.setUserId(account.getUser().getId());
         dto.setAccountNumber(account.getAccountNumber());
@@ -47,15 +48,22 @@ public class UserAccountServiceImpl implements UserAccountService {
         return dto;
     }
 
-    @Override
-    public FullUserAccountDTO getAccount(int id) {
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + id));
-        return mapAccountToDTO(account);
+    private UserAccountDTO mapAccountToDTO(Account account) {
+        UserAccountDTO dto = new UserAccountDTO();
+        dto.setAccountNumber(account.getAccountNumber());
+        dto.setBankId(account.getBank().getId());
+        return dto;
     }
 
     @Override
-    public FullUserAccountDTO createAccount(UserAccountDTO account) {
+    public ResponseFullUserAccountDTO getAccount(int id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + id));
+        return mapResponseAccountToDTO(account);
+    }
+
+    @Override
+    public UserAccountDTO createAccount(FullUserAccountDTO account) {
         if (account.getAccountNumber() == null || account.getUserId() == 0 || account.getBankId() == 0) {
             throw new IllegalArgumentException("All fields are required");
         }
@@ -66,12 +74,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
                 new ResourceNotFoundException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
+
         return mapAccountToDTO(newAccount);
 
     }
 
     @Override
-    public FullUserAccountDTO editAccount(int id, UserAccountDTO account) {
+    public ResponseFullUserAccountDTO editAccount(int id, FullUserAccountDTO account) {
         if (account.getAccountNumber() == null || account.getUserId() == 0 || account.getBankId() == 0) {
             throw new IllegalArgumentException("All fields are required");
         }
@@ -83,7 +92,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         newAccount.setBank(bankRepository.findById(account.getBankId()).orElseThrow(() ->
                 new ResourceNotFoundException("Bank not found with id: " + account.getBankId())));
         accountRepository.save(newAccount);
-        return mapAccountToDTO(newAccount);
+        return mapResponseAccountToDTO(newAccount);
     }
 
     @Override

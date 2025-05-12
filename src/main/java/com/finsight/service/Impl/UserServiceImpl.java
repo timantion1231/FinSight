@@ -1,7 +1,7 @@
 package com.finsight.service.Impl;
 
 import com.finsight.DTO.request.UserUpdateDTO;
-import com.finsight.DTO.response.FullUserAccountDTO;
+import com.finsight.DTO.response.ResponseFullUserAccountDTO;
 import com.finsight.DTO.response.FullUserClientDTO;
 import com.finsight.DTO.response.ReportDTO;
 import com.finsight.entity.Account;
@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
         return new ReportDTO();
     }
 
-    private ArrayList<FullUserAccountDTO> getAllAccounts(int id) {
+    private ArrayList<ResponseFullUserAccountDTO> getAllAccounts(int id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id)); // Updated exception
         List<Account> accounts = accountRepository.findByUserId(user.getId());
-        ArrayList<FullUserAccountDTO> userAccounts = new ArrayList<>();
+        ArrayList<ResponseFullUserAccountDTO> userAccounts = new ArrayList<>();
         for (Account account : accounts) {
-            FullUserAccountDTO accountDto = new FullUserAccountDTO();
+            ResponseFullUserAccountDTO accountDto = new ResponseFullUserAccountDTO();
             accountDto.setId(account.getId());
             accountDto.setAccountNumber(account.getAccountNumber());
             accountDto.setBankId(account.getBank().getId());

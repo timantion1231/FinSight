@@ -15,4 +15,6 @@ public class RegisterUserDTO {
     private String password;
     private int entityTypeId;
     private String tin;
+    private String accountNumber;
+    private int BankId;
 }

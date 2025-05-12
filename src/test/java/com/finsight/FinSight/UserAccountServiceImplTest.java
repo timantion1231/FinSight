@@ -1,6 +1,6 @@
 package com.finsight.FinSight;
 
-import com.finsight.DTO.request.UserAccountDTO;
+import com.finsight.DTO.request.FullUserAccountDTO;
 import com.finsight.entity.*;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
@@ -56,13 +56,13 @@ class UserAccountServiceImplTest {
 
     @Test
     void testCreateAccount_missingFields_shouldThrow() {
-        UserAccountDTO dto = new UserAccountDTO();
+        FullUserAccountDTO dto = new FullUserAccountDTO();
         assertThrows(IllegalArgumentException.class, () -> service.createAccount(dto));
     }
 
     @Test
     void testCreateAccount_success() {
-        UserAccountDTO dto = new UserAccountDTO();
+        FullUserAccountDTO dto = new FullUserAccountDTO();
         dto.setUserId(1);
         dto.setBankId(2);
         dto.setAccountNumber("123");
@@ -82,7 +82,7 @@ class UserAccountServiceImplTest {
 
     @Test
     void testEditAccount_invalidInput_shouldThrow() {
-        UserAccountDTO dto = new UserAccountDTO();
+        FullUserAccountDTO dto = new FullUserAccountDTO();
         assertThrows(IllegalArgumentException.class, () -> service.editAccount(1, dto));
     }
 

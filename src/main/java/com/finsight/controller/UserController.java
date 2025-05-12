@@ -1,6 +1,7 @@
 package com.finsight.controller;
 
 import com.finsight.DTO.request.*;
+import com.finsight.DTO.request.FullUserAccountDTO;
 import com.finsight.DTO.response.*;
 import com.finsight.service.CounterpartyService;
 import com.finsight.service.TransactionService;
@@ -71,23 +72,23 @@ public class UserController {
     }
 
     @GetMapping("/accounts/{userId}")
-    public ResponseEntity<ArrayList<FullUserAccountDTO>> getAllAccounts(@PathVariable int userId) {
+    public ResponseEntity<ArrayList<UserAccountDTO>> getAllAccounts(@PathVariable int userId) {
         return ResponseEntity.ok(userAccountService.getAllAccounts(userId));
     }
 
     @GetMapping("/account/{id}")
-    public ResponseEntity<FullUserAccountDTO> getAccount(@PathVariable int id) {
+    public ResponseEntity<ResponseFullUserAccountDTO> getAccount(@PathVariable int id) {
         return ResponseEntity.ok(userAccountService.getAccount(id));
     }
 
     @PostMapping("/accounts")
-    public ResponseEntity<FullUserAccountDTO> createAccount(@RequestBody UserAccountDTO account) {
+    public ResponseEntity<UserAccountDTO> createAccount(@RequestBody FullUserAccountDTO account) {
         return ResponseEntity.ok(userAccountService.createAccount(account));
     }
 
     @PutMapping("/accounts/{id}")
-    public ResponseEntity<FullUserAccountDTO> updateAccount(@PathVariable int id,
-                                                            @RequestBody UserAccountDTO account) {
+    public ResponseEntity<ResponseFullUserAccountDTO> updateAccount(@PathVariable int id,
+                                                                    @RequestBody FullUserAccountDTO account) {
         return ResponseEntity.ok(userAccountService.editAccount(id, account));
     }
 
