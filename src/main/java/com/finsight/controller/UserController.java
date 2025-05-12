@@ -8,9 +8,13 @@ import com.finsight.service.TransactionService;
 import com.finsight.service.UserAccountService;
 import com.finsight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RestController
@@ -125,4 +129,27 @@ public class UserController {
         return ResponseEntity.ok(userService.getReport(userId));
     }
 
+    @GetMapping("/reports")
+    public ResponseEntity<ByteArrayResource> getExcelReport(
+            @RequestParam(required = false) Long senderBankId,
+            @RequestParam(required = false) Long counterpartyBankId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(required = false) Integer transactionStatusId,
+            @RequestParam(required = false) Integer transactionTypeId,
+            @RequestParam(required = false) String counterpartyTin,
+            @RequestParam(required = false) BigDecimal amountMin,
+            @RequestParam(required = false) BigDecimal amountMax,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(defaultValue = "excel") String format
+    ) {
+        if (!format.equalsIgnoreCase("excel")) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return transactionService.generateExcelReport(
+                senderBankId, counterpartyBankId, dateFrom, dateTo,
+                transactionStatusId, transactionTypeId, counterpartyTin,
+                amountMin, amountMax, categoryId);
+    }
 }
