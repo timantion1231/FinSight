@@ -7,7 +7,7 @@ import com.finsight.entity.EntityType;
 import com.finsight.entity.User;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
-import com.finsight.service.Impl.CounterpartyServiceImpl;
+import com.finsight.service.impl.CounterpartyServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

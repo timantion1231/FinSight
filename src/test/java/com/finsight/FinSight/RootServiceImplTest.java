@@ -3,7 +3,7 @@ package com.finsight.FinSight;
 import com.finsight.entity.*;
 import com.finsight.exceptions.ResourceNotFoundException;
 import com.finsight.repository.*;
-import com.finsight.service.Impl.RootServiceImpl;
+import com.finsight.service.impl.RootServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
