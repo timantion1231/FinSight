@@ -33,4 +33,19 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleGlobalException(Exception ex, WebRequest request) {
         return new ResponseEntity<>("Произошла ошибка: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(DuplicateEntityException.class)
+    public ResponseEntity<String> handleDuplicateEntityException(DuplicateEntityException ex, WebRequest request){
+        return new ResponseEntity<>("Ошибка регистарции: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<String> handleEmailAlreadyExistsException(DuplicateEntityException ex, WebRequest request){
+        return new ResponseEntity<>("Ошибка регистарции: " + ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(DuplicateEntityException ex, WebRequest request){
+        return new ResponseEntity<>("Ошибка регистарции: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
