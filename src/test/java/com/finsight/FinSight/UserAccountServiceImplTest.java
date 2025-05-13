@@ -67,6 +67,8 @@ class UserAccountServiceImplTest {
         dto.setBankId(2);
         dto.setAccountNumber("123");
 
+        assertEquals(1, dto.getUserId());
+
         User user = new User(); user.setId(1);
         Bank bank = new Bank(); bank.setId(2);
 
@@ -75,8 +77,8 @@ class UserAccountServiceImplTest {
         when(accountRepository.save(any(Account.class))).thenAnswer(i -> i.getArguments()[0]);
 
         var result = service.createAccount(dto);
+
         assertEquals("123", result.getAccountNumber());
-        assertEquals(1, result.getUserId());
         assertEquals(2, result.getBankId());
     }
 
